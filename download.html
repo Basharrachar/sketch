@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Software</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Navigation */
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff4757;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+        }
+
+        .nav-links a.active {
+            background: #ff4757;
+            color: #ffffff;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .download-section {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .download-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff4757, #ff6b7a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .download-subtitle {
+            color: #999999;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .download-options {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 180px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff4757;
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+        }
+
+        .download-card.sketch {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.2), rgba(255, 71, 87, 0.05));
+        }
+
+        .download-card.sketch-x {
+            background: linear-gradient(135deg, rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.05));
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .sketch .card-icon {
+            color: #ff4757;
+        }
+
+        .sketch-x .card-icon {
+            color: #888888;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .support-text {
+            color: #999999;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        .support-text a {
+            color: #ff4757;
+            text-decoration: none;
+        }
+
+        .support-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #ff4757;
+        }
+
+        .modal-subtitle {
+            color: #999999;
+            margin-bottom: 2rem;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: #ff4757;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-verify {
+            background: #ff4757;
+            color: #ffffff;
+        }
+
+        .btn-verify:hover {
+            background: #ff3742;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #999999;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+        }
+
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #333333;
+            border: 2px solid #555555;
+            transition: all 0.3s ease;
+        }
+
+        .status-indicator.verified {
+            background: #27ae60;
+            border-color: #2ecc71;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+        }
+
+        .download-btn {
+            background: #27ae60;
+            color: #ffffff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .download-options {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .download-card {
+                width: 250px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">Sketch / SketchX - D0WNL0AD</div>
+            <ul class="nav-links">
+                <a href="index.html" class="signup-btn">Retour à la Main-Page</a>
+                <li><a href="download.html" class="nav-link active">Download Software</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="download-section">
+            <h1 class="download-title">Choisissez votre Produit</h1>
+            <p class="download-subtitle">Selectionnez le produit acheté. / Select the product you buy.</p>
+            
+            <div class="download-options">
+                <div class="download-card sketch" data-software="sketch">
+                    <div class="status-indicator"></div>
+                    <div class="card-icon">SK</div>
+                    <div class="card-title">Sketch</div>
+                </div>
+                
+                <div class="download-card sketch-x" data-software="sketch-x">
+                    <div class="status-indicator"></div>
+                    <div class="card-icon">SKX</div>
+                    <div class="card-title">Sketch X</div>
+                </div>
+            </div>
+            
+            <p class="support-text">
+                Contacter <a href="#">le Staff</a> pour avoir de l'aide.
+            </p>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">Clé Requise / Key Required</h2>
+            <p class="modal-subtitle">Veuillez entrez la key donné par les vendeurs en cliquant sur le produit acheter.</p>
+            
+            <input type="text" class="code-input" id="codeInput" placeholder="Enter Key / Entrez votre Clé" maxlength="20">
+            
+            <div class="modal-buttons">
+                <button class="btn btn-verify" onclick="verifyCode()">Verify</button>
+                <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+            </div>
+            
+            <button class="download-btn" id="downloadBtn" onclick="startDownload()">
+                Télcharger / Download
+            </button>
+            
+            <div class="error-message" id="errorMessage">
+                Le code est invalide, veuillez réessayer...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSoftware = '';
+        
+        // Codes d'accès et URLs de téléchargement pour chaque logiciel
+        const accessCodes = {
+            'sketch': 'sk-lifet1me-5200',
+            'sketch-x': 'skx-l1fet1me-6200'
+        };
+        
+        const downloadUrls = {
+            'sketch': 'https://gofile.io/d/ClCxS9',
+            'sketch-x': 'https://gofile.io/d/gJrApf'
+        };
+
+        // Add click handlers to download cards
+        document.querySelectorAll('.download-card').forEach(card => {
+            card.addEventListener('click', function() {
+                currentSoftware = this.dataset.software;
+                openModal();
+            });
+        });
+
+        function openModal() {
+            document.getElementById('authModal').classList.add('active');
+            document.getElementById('codeInput').focus();
+            // Reset modal state
+            document.getElementById('codeInput').value = '';
+            document.getElementById('downloadBtn').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // Reset modal title and subtitle
+            document.querySelector('.modal-title').textContent = 'Access Code Required';
+            document.querySelector('.modal-subtitle').textContent = 'Please enter your access code to continue with the download.';
+        }
+
+        function closeModal() {
+            document.getElementById('authModal').classList.remove('active');
+        }
+
+        function verifyCode() {
+            const inputCode = document.getElementById('codeInput').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const correctCode = accessCodes[currentSoftware];
+            
+            if (inputCode === correctCode) {
+                // Code correct
+                errorMessage.style.display = 'none';
+                downloadBtn.style.display = 'inline-block';
+                
+                // Update status indicator
+                const card = document.querySelector(`[data-software="${currentSoftware}"]`);
+                const indicator = card.querySelector('.status-indicator');
+                indicator.classList.add('verified');
+                
+                // Show success feedback
+                document.querySelector('.modal-title').textContent = 'Access Granted!';
+                document.querySelector('.modal-subtitle').textContent = 'Your download is ready.';
+            } else {
+                // Code incorrect
+                errorMessage.style.display = 'block';
+                downloadBtn.style.display = 'none';
+                
+                // Shake animation for error
+                document.getElementById('codeInput').style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.getElementById('codeInput').style.animation = '';
+                }, 500);
+            }
+        }
+
+        function startDownload() {
+            const downloadUrl = downloadUrls[currentSoftware];
+            
+            // Create invisible link and trigger download
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = currentSoftware === 'sketch' ? 'Sketch.exe' : 'SketchX.exe';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Close modal after download starts
+            setTimeout(() => {
+                closeModal();
+            }, 500);
+        }
+
+        // Allow Enter key to verify code
+        document.getElementById('codeInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyCode();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('authModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Add shake animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
