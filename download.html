@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Software</title>
+    <title>Sketch - Download</title>
     <style>
         * {
             margin: 0;
@@ -12,158 +12,302 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #000000;
             color: #ffffff;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* Header Navigation */
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(246, 92, 92, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(242, 88, 88, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(247, 85, 85, 0.1) 0%, transparent 50%);
+            animation: bgShift 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Header */
         .header {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -2px;
+            text-shadow: 0 0 20px rgba(246, 92, 92, 0.5);
+            text-decoration: none;
         }
 
         .nav {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 45px;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ff4757;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #ffffff;
+        .nav a {
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 8px 0;
         }
 
-        .nav-links a:hover {
-            background: rgba(255, 71, 87, 0.2);
-            color: #ff4757;
+        .nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f65c5c, #f75555);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
         }
 
-        .nav-links a.active {
-            background: #ff4757;
+        .nav a:hover {
             color: #ffffff;
+            text-shadow: 0 0 10px rgba(246, 92, 92, 0.5);
         }
 
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .download-section {
-            text-align: center;
-            max-width: 600px;
+        .nav a:hover::before {
             width: 100%;
         }
 
-        .download-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            font-style: italic;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #ff4757, #ff6b7a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .nav a.active {
+            color: #f65c5c;
         }
 
-        .download-subtitle {
-            color: #999999;
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
+        .nav a.active::before {
+            width: 100%;
         }
 
-        .download-options {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        .download-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            width: 180px;
+        .back-btn {
+            background: linear-gradient(135deg, #f65c5c 0%, #f75555 100%);
+            color: white;
+            border: none;
+            padding: 0 24px;
+            height: 40px;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(246, 92, 92, 0.3);
             position: relative;
             overflow: hidden;
         }
 
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(246, 92, 92, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 120px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .download-container {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            padding: 0 40px;
+            z-index: 10;
+        }
+
+        .download-title {
+            font-size: 48px;
+            font-weight: 900;
+            font-style: italic;
+            color: #ffffff;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #ffffff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { 
+                text-shadow: 0 0 20px rgba(246, 92, 92, 0.3);
+            }
+            to { 
+                text-shadow: 0 0 40px rgba(246, 92, 92, 0.5), 0 0 60px rgba(246, 92, 92, 0.2);
+            }
+        }
+
+        .download-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .download-card {
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.9) 0%, rgba(25, 25, 25, 0.9) 100%);
+            border: 1px solid rgba(246, 92, 92, 0.3);
+            border-radius: 16px;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(246, 92, 92, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .download-card:hover::before {
+            opacity: 1;
+        }
+
         .download-card:hover {
-            transform: translateY(-5px);
-            border-color: #ff4757;
-            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+            transform: translateY(-8px);
+            border-color: #f65c5c;
+            box-shadow: 0 20px 60px rgba(246, 92, 92, 0.3);
         }
 
-        .download-card.sketch {
-            background: linear-gradient(135deg, rgba(255, 71, 87, 0.2), rgba(255, 71, 87, 0.05));
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
         }
 
-        .download-card.sketch-x {
-            background: linear-gradient(135deg, rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.05));
+        .status-indicator.verified {
+            background: #27ae60;
+            border-color: #2ecc71;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
         }
 
         .card-icon {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .sketch .card-icon {
-            color: #ff4757;
-        }
-
-        .sketch-x .card-icon {
-            color: #888888;
+            font-size: 48px;
+            font-weight: 900;
+            color: #f65c5c;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(246, 92, 92, 0.3);
         }
 
         .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
             color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
         }
 
         .support-text {
-            color: #999999;
-            font-size: 0.9rem;
-            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            animation: fadeInUp 1s ease-out 0.9s both;
         }
 
         .support-text a {
-            color: #ff4757;
+            color: #f65c5c;
             text-decoration: none;
+            transition: all 0.3s ease;
         }
 
         .support-text a:hover {
-            text-decoration: underline;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(246, 92, 92, 0.5);
         }
 
         /* Modal */
@@ -174,9 +318,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
             align-items: center;
             justify-content: center;
         }
@@ -186,190 +330,349 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.95) 0%, rgba(25, 25, 25, 0.95) 100%);
+            border: 1px solid rgba(246, 92, 92, 0.3);
+            border-radius: 20px;
+            padding: 40px;
             text-align: center;
-            max-width: 400px;
+            max-width: 450px;
             width: 90%;
             position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            animation: modalAppear 0.3s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #f65c5c;
         }
 
         .modal-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #ff4757;
+            font-size: 28px;
+            font-weight: 800;
+            color: #f65c5c;
+            margin-bottom: 16px;
+            text-shadow: 0 0 20px rgba(246, 92, 92, 0.3);
         }
 
         .modal-subtitle {
-            color: #999999;
-            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            line-height: 1.5;
         }
 
         .code-input {
             width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
             color: #ffffff;
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
+            font-size: 16px;
+            margin-bottom: 25px;
             text-align: center;
             letter-spacing: 2px;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .code-input:focus {
             outline: none;
-            border-color: #ff4757;
-            box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+            border-color: #f65c5c;
+            box-shadow: 0 0 20px rgba(246, 92, 92, 0.3);
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .modal-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 16px;
             justify-content: center;
+            margin-bottom: 20px;
         }
 
         .btn {
-            padding: 0.8rem 2rem;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 16px;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-verify {
-            background: #ff4757;
+            background: linear-gradient(135deg, #f65c5c 0%, #f75555 100%);
             color: #ffffff;
+            box-shadow: 0 4px 15px rgba(246, 92, 92, 0.3);
         }
 
         .btn-verify:hover {
-            background: #ff3742;
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(246, 92, 92, 0.4);
         }
 
         .btn-cancel {
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .btn-cancel:hover {
             background: rgba(255, 255, 255, 0.2);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            color: #999999;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .close-btn:hover {
-            color: #ffffff;
-        }
-
-        .status-indicator {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #333333;
-            border: 2px solid #555555;
-            transition: all 0.3s ease;
-        }
-
-        .status-indicator.verified {
-            background: #27ae60;
-            border-color: #2ecc71;
-            box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+            transform: translateY(-2px);
         }
 
         .download-btn {
-            background: #27ae60;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
             color: #ffffff;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 1rem;
             display: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
         }
 
         .download-btn:hover {
-            background: #229954;
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
         }
 
         .error-message {
             color: #e74c3c;
-            font-size: 0.9rem;
-            margin-top: 1rem;
+            font-size: 14px;
+            margin-top: 15px;
             display: none;
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(231, 76, 60, 0.3);
         }
 
+        /* Floating Elements Background */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: floatOrb 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(246, 92, 92, 0.3) 0%, rgba(246, 92, 92, 0.1) 70%, transparent 100%);
+            top: 20%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(242, 88, 88, 0.2) 0%, rgba(242, 88, 88, 0.1) 70%, transparent 100%);
+            top: 70%;
+            right: 20%;
+            animation-delay: -3s;
+        }
+
+        .orb-3 {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(247, 85, 85, 0.25) 0%, rgba(247, 85, 85, 0.1) 70%, transparent 100%);
+            top: 40%;
+            right: 10%;
+            animation-delay: -6s;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px) scale(1.1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-10px) translateX(-15px) scale(0.9);
+                opacity: 0.2;
+            }
+            75% {
+                transform: translateY(-30px) translateX(5px) scale(1.05);
+                opacity: 0.4;
+            }
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .header {
+                padding: 0 20px;
+                height: 70px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .main-content {
+                padding-top: 100px;
+            }
+
+            .download-container {
+                padding: 0 20px;
+            }
+
+            .download-title {
+                font-size: 32px;
+            }
+
             .download-options {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
 
             .download-card {
-                width: 250px;
+                padding: 30px 20px;
             }
 
-            .nav-links {
-                gap: 1rem;
+            .modal-content {
+                padding: 30px 20px;
+                margin: 20px;
             }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+    </div>
+
+    <!-- Header -->
     <header class="header">
+        <a href="index.html" class="logo">Sketch</a>
         <nav class="nav">
-            <div class="logo">Sketch / SketchX - D0WNL0AD</div>
-            <ul class="nav-links">
-                <a href="index.html" class="signup-btn">Retour à la Main-Page</a>
-                <li><a href="download.html" class="nav-link active">Download Software</a></li>
-            </ul>
+            <a href="index.html">Accueil</a>
+            <a href="shop.html">Boutique</a>
+            <a href="resseler.html">Nos revendeurs de confiance</a>
+            <a href="status.html">Statut</a>
+            <a href="help.html">Assistance</a>
+            <a href="download.html" class="active">Download</a>
         </nav>
+        <div class="header-buttons">
+            <a href="index.html" class="back-btn">← Retour</a>
+        </div>
     </header>
 
+    <!-- Main Content -->
     <main class="main-content">
-        <div class="download-section">
-            <h1 class="download-title">Choisissez votre Produit</h1>
-            <p class="download-subtitle">Selectionnez le produit acheté. / Select the product you buy.</p>
+        <div class="download-container">
+            <h1 class="download-title">TÉLÉCHARGEZ VOTRE PRODUIT</h1>
+            <p class="download-subtitle">Sélectionnez le produit que vous avez acheté et entrez votre clé d'accès pour démarrer le téléchargement.</p>
             
             <div class="download-options">
-                <div class="download-card sketch" data-software="sketch">
+                <div class="download-card" data-software="sketch">
                     <div class="status-indicator"></div>
                     <div class="card-icon">SK</div>
                     <div class="card-title">Sketch</div>
+                    <div class="card-description">Version complète avec toutes les fonctionnalités avancées</div>
                 </div>
                 
-                <div class="download-card sketch-x" data-software="sketch-x">
+                <div class="download-card" data-software="sketch-x">
                     <div class="status-indicator"></div>
                     <div class="card-icon">SKX</div>
                     <div class="card-title">Sketch X</div>
+                    <div class="card-description">Version premium avec fonctionnalités exclusives</div>
                 </div>
             </div>
             
-            <p class="support-text">
-                Contacter <a href="#">le Staff</a> pour avoir de l'aide.
-            </p>
+<p class="support-text">
+    Besoin d'aide ? Contactez <a href="https://discord.gg/NCjncBXwnW">le support technique</a> pour obtenir de l'assistance.
+</p>
         </div>
     </main>
 
@@ -377,22 +680,22 @@
     <div class="modal" id="authModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h2 class="modal-title">Clé Requise / Key Required</h2>
-            <p class="modal-subtitle">Veuillez entrez la key donné par les vendeurs en cliquant sur le produit acheter.</p>
+            <h2 class="modal-title">CLÉ D'ACCÈS REQUISE</h2>
+            <p class="modal-subtitle">Veuillez entrer la clé d'accès fournie par votre revendeur pour télécharger le produit sélectionné.</p>
             
-            <input type="text" class="code-input" id="codeInput" placeholder="Enter Key / Entrez votre Clé" maxlength="20">
+            <input type="text" class="code-input" id="codeInput" placeholder="Entrez votre clé d'accès..." maxlength="20">
             
             <div class="modal-buttons">
-                <button class="btn btn-verify" onclick="verifyCode()">Verify</button>
-                <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-verify" onclick="verifyCode()">Vérifier</button>
+                <button class="btn btn-cancel" onclick="closeModal()">Annuler</button>
             </div>
             
             <button class="download-btn" id="downloadBtn" onclick="startDownload()">
-                Télcharger / Download
+                🔒 Télécharger Maintenant
             </button>
             
             <div class="error-message" id="errorMessage">
-                Le code est invalide, veuillez réessayer...
+                ⚠️ Clé d'accès invalide. Veuillez vérifier et réessayer.
             </div>
         </div>
     </div>
@@ -427,9 +730,14 @@
             document.getElementById('downloadBtn').style.display = 'none';
             document.getElementById('errorMessage').style.display = 'none';
             
-            // Reset modal title and subtitle
-            document.querySelector('.modal-title').textContent = 'Access Code Required';
-            document.querySelector('.modal-subtitle').textContent = 'Please enter your access code to continue with the download.';
+            // Update modal content based on selected software
+            const softwareNames = {
+                'sketch': 'Sketch',
+                'sketch-x': 'Sketch X'
+            };
+            
+            document.querySelector('.modal-title').textContent = `CLÉ D'ACCÈS - ${softwareNames[currentSoftware]}`;
+            document.querySelector('.modal-subtitle').textContent = `Veuillez entrer la clé d'accès pour ${softwareNames[currentSoftware]} fournie par votre revendeur.`;
         }
 
         function closeModal() {
@@ -453,17 +761,26 @@
                 indicator.classList.add('verified');
                 
                 // Show success feedback
-                document.querySelector('.modal-title').textContent = 'Access Granted!';
-                document.querySelector('.modal-subtitle').textContent = 'Your download is ready.';
+                document.querySelector('.modal-title').textContent = '✅ ACCÈS AUTORISÉ';
+                document.querySelector('.modal-subtitle').textContent = 'Votre téléchargement est prêt à démarrer.';
+                
+                // Success animation
+                document.getElementById('codeInput').style.borderColor = '#27ae60';
+                document.getElementById('codeInput').style.boxShadow = '0 0 20px rgba(39, 174, 96, 0.3)';
             } else {
                 // Code incorrect
                 errorMessage.style.display = 'block';
                 downloadBtn.style.display = 'none';
                 
-                // Shake animation for error
+                // Error animation
                 document.getElementById('codeInput').style.animation = 'shake 0.5s';
+                document.getElementById('codeInput').style.borderColor = '#e74c3c';
+                document.getElementById('codeInput').style.boxShadow = '0 0 20px rgba(231, 76, 60, 0.3)';
+                
                 setTimeout(() => {
                     document.getElementById('codeInput').style.animation = '';
+                    document.getElementById('codeInput').style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    document.getElementById('codeInput').style.boxShadow = 'none';
                 }, 500);
             }
         }
@@ -471,9 +788,14 @@
         function startDownload() {
             const downloadUrl = downloadUrls[currentSoftware];
             
+            // Show download starting feedback
+            document.getElementById('downloadBtn').textContent = '⏳ Téléchargement en cours...';
+            document.getElementById('downloadBtn').disabled = true;
+            
             // Create invisible link and trigger download
             const link = document.createElement('a');
             link.href = downloadUrl;
+            link.target = '_blank';
             link.download = currentSoftware === 'sketch' ? 'Sketch.exe' : 'SketchX.exe';
             document.body.appendChild(link);
             link.click();
@@ -482,7 +804,10 @@
             // Close modal after download starts
             setTimeout(() => {
                 closeModal();
-            }, 500);
+                // Reset download button
+                document.getElementById('downloadBtn').textContent = '🔒 Télécharger Maintenant';
+                document.getElementById('downloadBtn').disabled = false;
+            }, 1500);
         }
 
         // Allow Enter key to verify code
@@ -499,16 +824,12 @@
             }
         });
 
-        // Add shake animation CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                25% { transform: translateX(-5px); }
-                75% { transform: translateX(5px); }
-            }
-        `;
-        document.head.appendChild(style);
+        // Real-time input validation
+        document.getElementById('codeInput').addEventListener('input', function() {
+            this.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            this.style.boxShadow = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        });
     </script>
 </body>
 </html>
