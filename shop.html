@@ -424,29 +424,69 @@
             text-shadow: 0 0 20px rgba(246, 92, 92, 0.3);
         }
 
-        .payment-buttons {
-            display: flex;
-            gap: 12px;
+        .payment-section {
+            text-align: center;
         }
 
-        .payment-btn {
-            flex: 1;
-            padding: 16px;
+        .payment-info {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(246, 92, 92, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .payment-title {
+            color: #f65c5c;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .discord-username {
+            background: rgba(114, 137, 218, 0.2);
+            color: #7289da;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: inline-block;
+            border: 1px solid rgba(114, 137, 218, 0.3);
+        }
+
+        .payment-instruction {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .gift-card-btn {
+            background: linear-gradient(135deg, #f65c5c 0%, #f75555 100%);
+            color: white;
             border: none;
+            padding: 16px 32px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             font-size: 14px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 15px rgba(246, 92, 92, 0.3);
+            text-decoration: none;
+            width: 100%;
         }
 
-        .payment-btn::before {
+        .gift-card-btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -457,30 +497,29 @@
             transition: left 0.5s;
         }
 
-        .payment-btn:hover::before {
+        .gift-card-btn:hover::before {
             left: 100%;
         }
 
-        .card-btn {
-            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(31, 41, 55, 0.3);
-        }
-
-        .card-btn:hover {
+        .gift-card-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(31, 41, 55, 0.4);
+            box-shadow: 0 8px 25px rgba(246, 92, 92, 0.4);
         }
 
-        .paypal-btn {
-            background: linear-gradient(135deg, #0070ba 0%, #005a9c 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 112, 186, 0.3);
+        .copy-btn {
+            background: rgba(114, 137, 218, 0.2);
+            color: #7289da;
+            border: 1px solid rgba(114, 137, 218, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 8px;
         }
 
-        .paypal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 112, 186, 0.4);
+        .copy-btn:hover {
+            background: rgba(114, 137, 218, 0.3);
         }
 
         /* Mobile Responsive */
@@ -533,10 +572,6 @@
 
             .mockup-content {
                 grid-template-columns: 1fr;
-            }
-
-            .payment-buttons {
-                flex-direction: column;
             }
         }
     </style>
@@ -611,14 +646,20 @@
                             <div class="price">30€</div>
                         </div>
                         
-                        <div class="payment-buttons">
-                            <button class="payment-btn card-btn">
-                                💳 Carte
-                            </button>
-                            <button class="payment-btn paypal-btn">
-                                💰 PayPal
-                            </button>
+                        <div class="payment-info">
+                            <div class="payment-title">Paiement par carte cadeau</div>
+                            <div class="discord-username">
+                                searchbashar
+                                <button class="copy-btn" onclick="copyToClipboard('searchbashar')">Copier</button>
+                            </div>
+                            <div class="payment-instruction">
+                                Contactez-moi sur Discord pour procéder au paiement par carte cadeau
+                            </div>
                         </div>
+                        
+                        <a href="https://discord.com/users/searchbashar" target="_blank" class="gift-card-btn">
+                            🎁 Contacter sur Discord
+                        </a>
                     </div>
                 </div>
 
@@ -661,14 +702,20 @@
                             <div class="price">20€</div>
                         </div>
                         
-                        <div class="payment-buttons">
-                            <button class="payment-btn card-btn">
-                                💳 Carte
-                            </button>
-                            <button class="payment-btn paypal-btn">
-                                💰 PayPal
-                            </button>
+                        <div class="payment-info">
+                            <div class="payment-title">Paiement par carte cadeau</div>
+                            <div class="discord-username">
+                                searchbashar
+                                <button class="copy-btn" onclick="copyToClipboard('searchbashar')">Copier</button>
+                            </div>
+                            <div class="payment-instruction">
+                                Contactez-moi sur Discord pour procéder au paiement par carte cadeau
+                            </div>
                         </div>
+                        
+                        <a href="https://discord.com/users/searchbashar" target="_blank" class="gift-card-btn">
+                            🎁 Contacter sur Discord
+                        </a>
                     </div>
                 </div>
             </div>
@@ -691,17 +738,34 @@
             });
         });
 
-        // Effets sur les boutons de paiement
-        document.querySelectorAll('.payment-btn').forEach(btn => {
+        // Fonction pour copier le nom d'utilisateur Discord
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Afficher une confirmation visuelle
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Copié!';
+                button.style.backgroundColor = 'rgba(46, 204, 113, 0.3)';
+                button.style.color = '#2ecc71';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '';
+                    button.style.color = '';
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Erreur lors de la copie: ', err);
+            });
+        }
+
+        // Effets sur les boutons de contact Discord
+        document.querySelectorAll('.gift-card-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 // Animation de clic
                 this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     this.style.transform = '';
                 }, 150);
-                
-                // Ici vous pouvez ajouter la logique de paiement
-                console.log('Bouton de paiement cliqué:', this.textContent.trim());
             });
         });
     </script>
